@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LC Mank Weihnachts-Tombola</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>LC Mank Weihnachts-Tombola</h1>
+
+    <div class="main-controls">
+      <div class="mode-selector">
+        <label for="modeSelect">Verlosung:</label>
+        <select id="modeSelect">
+          <option value="normal">Craft Schuhe (5 Teilnahmen)</option>
+          <option value="premium">Hauptverlosung (Herren 35, Damen 30)</option>
+        </select>
+      </div>
+      <button id="drawButton" disabled>Ziehung starten</button>
+    </div>
+
+    <h2 id="winner"></h2>
+
+    <h3>Teilnehmer: <span id="remainingCount">0</span></h3>
+    <ul id="remainingList"></ul>
+
+    <!-- ⚙️ Collapsible Settings Section -->
+    <div class="settings">
+      <button id="toggleSettings">⚙️ Einstellungen</button>
+      <div id="settingsPanel" class="hidden">
+        <h3>Dateien hochladen</h3>
+        <div class="upload-section">
+          <label>Herren CSV:</label>
+          <input type="file" id="maleInput" accept=".csv" title="test"/><br><br>
+          <label>Damen CSV:</label>
+          <input type="file" id="femaleInput" accept=".csv" /><br><br>
+        </div>
+
+        <!-- Reset button moved inside settings -->
+        <button id="resetButton">Tombola neustarten</button>
+      </div>
+    </div>
+  </div>
+
+  <canvas id="confetti"></canvas>
+  <script src="script.js"></script>
+</body>
+</html>
