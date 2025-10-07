@@ -100,7 +100,17 @@ function drawWinner() {
     return;
   }
 
-  const winnerIndex = weightedRandomIndex(members.map(m => m.weight));
+  let winnerIndex;
+
+  if (modeSelect.value === "normal") {
+    // Normal tombola: equal chance
+    winnerIndex = Math.floor(Math.random() * members.length);
+  } else {
+    // Premium tombola: weighted chance
+    const weights = members.map(m => m.weight);
+    winnerIndex = weightedRandomIndex(weights);
+  }
+
   const winner = members.splice(winnerIndex, 1)[0];
   winners.push(winner.name);
 
@@ -145,6 +155,12 @@ function saveState() {
 function updateList() {
   const remainingCount = document.getElementById("remainingCount");
   const tbody = document.querySelector("#participantsTable tbody");
+  const chanceHeader = document.getElementById("chanceHeader");
+
+  const isPremium = modeSelect.value === "premium";
+
+  // Show/hide Chance column
+  chanceHeader.style.display = isPremium ? "" : "none";
 
   if (members.length === 0) {
     tbody.innerHTML = "<tr><td colspan='4' style='text-align:center;'>Alle Teilnehmer wurden gezogen!</td></tr>";
@@ -152,26 +168,30 @@ function updateList() {
     return;
   }
 
-  const totalWeight = members.reduce((sum, m) => sum + m.weight, 0);
+  const totalWeight = isPremium
+    ? members.reduce((sum, m) => sum + m.weight, 0)
+    : members.length; // equal chance for normal
 
-  // Sort descending by ticket count
+  // Sort descending by tickets (or name if you prefer)
   const sortedMembers = [...members].sort((a, b) => b.weight - a.weight);
 
   tbody.innerHTML = sortedMembers
     .map((m) => {
-      const chancePercent = ((m.weight / totalWeight) * 100).toFixed(1);
-      const color = m.type === "male" ? "blue" : "deeppink";
+      const chancePercent = isPremium
+        ? ((m.weight / totalWeight) * 100).toFixed(1)
+        : ""; // empty for normal
       return `<tr>
         <td>${m.name}</td>
         <td>${m.weight}</td>
-        <td>${chancePercent}</td>
+        <td style="display:${isPremium ? "" : "none"};">${chancePercent}</td>
       </tr>`;
     })
     .join("");
 
-  // Update the count
+  // Update participant count
   remainingCount.textContent = members.length;
 }
+
 
 
 
