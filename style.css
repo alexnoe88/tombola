@@ -125,4 +125,46 @@ li {
 
 .mode-selector select {
   padding: 5px 10px;
-  borde
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+/* 🎄 Participants Table Styling */
+#participantsTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  background: rgba(255, 255, 255, 0.9);
+  color: #003366;
+}
+
+#participantsTable th,
+#participantsTable td {
+  border: 1px solid #ccc;
+  padding: 8px 12px;
+  text-align: left;
+}
+
+#participantsTable th {
+  background-color: #1e88e5;
+  color: white;
+}
+
+#participantsTable tbody tr:nth-child(even) {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+#participantsTable tbody tr:hover {
+  background-color: rgba(30, 136, 229, 0.2);
+}
+
+/* Confetti canvas */
+#confetti {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
+}

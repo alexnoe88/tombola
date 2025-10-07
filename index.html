@@ -24,7 +24,18 @@
     <h2 id="winner"></h2>
 
     <h3>Teilnehmer: <span id="remainingCount">0</span></h3>
-    <ul id="remainingList"></ul>
+		<table id="participantsTable">
+		<thead>
+			<tr>
+			<th>Name</th>
+			<th>Teilnahmen</th>
+			<th>Gewinnchance (%)</th>
+			</tr>
+		</thead>
+		<tbody>
+			<!-- Participant rows will be inserted here -->
+		</tbody>
+		</table>
 
     <!-- ⚙️ Collapsible Settings Section -->
     <div class="settings">
@@ -38,6 +49,8 @@
           <input type="file" id="femaleInput" accept=".csv" /><br><br>
         </div>
 
+		<!-- Generate Test Data Button -->
+		<button id="generateTestDataBtn">Testdaten erzeugen</button>
         <!-- Reset button moved inside settings -->
         <button id="resetButton">Tombola neustarten</button>
       </div>

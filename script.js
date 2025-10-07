@@ -142,12 +142,12 @@ function saveState() {
   localStorage.setItem("tombolaAllMembers", JSON.stringify(allMembers));
 }
 
-// 🧾 Update list sorted by chance
 function updateList() {
   const remainingCount = document.getElementById("remainingCount");
+  const tbody = document.querySelector("#participantsTable tbody");
 
   if (members.length === 0) {
-    remainingList.innerHTML = "<li>No participants eligible in this mode 🎄</li>";
+    tbody.innerHTML = "<tr><td colspan='4' style='text-align:center;'>No participants eligible in this mode 🎄</td></tr>";
     remainingCount.textContent = 0;
     return;
   }
@@ -157,19 +157,22 @@ function updateList() {
   // Sort descending by ticket count
   const sortedMembers = [...members].sort((a, b) => b.weight - a.weight);
 
-  remainingList.innerHTML = sortedMembers
+  tbody.innerHTML = sortedMembers
     .map((m) => {
       const chancePercent = ((m.weight / totalWeight) * 100).toFixed(1);
       const color = m.type === "male" ? "blue" : "deeppink";
-      return `<li>${m.name} 
-        <span style="color:${color}; font-weight:bold;">(${m.type})</span>
-        <span style="color:gray;"> – ${m.weight} tickets, ${chancePercent}% chance</span></li>`;
+      return `<tr>
+        <td>${m.name}</td>
+        <td>${m.weight}</td>
+        <td>${chancePercent}</td>
+      </tr>`;
     })
     .join("");
 
   // Update the count
   remainingCount.textContent = members.length;
 }
+
 
 
 // 🎊 Confetti
@@ -222,3 +225,32 @@ function confettiBurst() {
 
 // 🧩 Mode change
 modeSelect.addEventListener("change", applyModeFilter);
+
+const generateTestDataBtn = document.getElementById("generateTestDataBtn");
+
+generateTestDataBtn.addEventListener("click", () => {
+  if (!confirm("Testdaten generieren? Dies wird existierende Teilnehmer überschreiben.")) return;
+
+  // Clear previous data
+  allMembers = [];
+  members = [];
+  winners = [];
+  winnerDisplay.textContent = "";
+  
+  // Generate 10-15 random males
+  const maleCount = 10; // you can change
+  allMembers.push({ name: `Alexander Luger`, weight: 36, type: "male" });
+  allMembers.push({ name: `Moritz Pozsgay`, weight: 35, type: "male" });
+  allMembers.push({ name: `Johann Fasel`, weight: 39, type: "male" });
+  allMembers.push({ name: `Philipp Barbi`, weight: 31, type: "male" });
+  allMembers.push({ name: `Herbert Schmid`, weight: 29, type: "male" });
+
+  allMembers.push({ name: `Jennifer Eder`, weight: 31, type: "female" });
+  allMembers.push({ name: `Sabine Plank`, weight: 33, type: "female" });
+  allMembers.push({ name: `Stefanie Blaschek`, weight: 17, type: "female" });
+  allMembers.push({ name: `Michaela Zöchbauer`, weight: 22, type: "female" });
+  allMembers.push({ name: `Monika Der`, weight: 30, type: "female" });
+
+  saveState();
+  applyModeFilter();
+});
