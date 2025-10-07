@@ -17,7 +17,7 @@ const settingsPanel = document.getElementById("settingsPanel");
 toggleSettings.addEventListener("click", () => {
   settingsPanel.classList.toggle("hidden");
   toggleSettings.textContent = settingsPanel.classList.contains("hidden")
-    ? "⚙️ Verwaltung"
+    ? "⚙️ Einstellungen"
     : "⬇️ Einstellungen verstecken";
 });
 
@@ -96,7 +96,7 @@ drawButton.addEventListener("click", drawWinner);
 
 function drawWinner() {
   if (members.length === 0) {
-    alert("Alle Teilnehmer wurden gezogen! 🎉");
+    alert("Alle Teilnehmer wurden gezogen!");
     return;
   }
 
@@ -147,7 +147,7 @@ function updateList() {
   const tbody = document.querySelector("#participantsTable tbody");
 
   if (members.length === 0) {
-    tbody.innerHTML = "<tr><td colspan='4' style='text-align:center;'>No participants eligible in this mode 🎄</td></tr>";
+    tbody.innerHTML = "<tr><td colspan='4' style='text-align:center;'>Alle Teilnehmer wurden gezogen!</td></tr>";
     remainingCount.textContent = 0;
     return;
   }
@@ -253,4 +253,9 @@ generateTestDataBtn.addEventListener("click", () => {
 
   saveState();
   applyModeFilter();
+  // ✅ Automatically collapse settings panel
+  if (!settingsPanel.classList.contains("hidden")) {
+    settingsPanel.classList.add("hidden");
+    toggleSettings.textContent = "⚙️ Einstellungen";
+  }
 });
